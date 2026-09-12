@@ -105,7 +105,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .bloco-carrossel__seta:disabled:hover { border-color: var(--cor-borda); color: var(--cor-texto); }
 .bloco-carrossel__seta .icone { width: 17px; height: 17px; }
 
-.bloco-carrossel__pista { display: flex; gap: var(--sp-3); overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; touch-action: pan-x; scroll-margin-top: 90px; }
+.bloco-carrossel__pista { display: flex; gap: var(--sp-3); overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; touch-action: pan-x pan-y; scroll-margin-top: 90px; }
 .bloco-carrossel__pista::-webkit-scrollbar { display: none; }
 
 /* ---------- 7. CARTÃO DE PRODUTO ---------- */
