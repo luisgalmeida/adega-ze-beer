@@ -258,8 +258,13 @@ trecho que chama essa function via `supabase.functions.invoke('criar-pedido', { 
    ```js
    const SUPABASE_URL = 'https://SEU-PROJETO.supabase.co';
    const SUPABASE_PUBLISHABLE_KEY = 'SUA-CHAVE-PUBLISHABLE';
-   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+   const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
    ```
+   **Atenção ao nome da variável:** chame de `sb` (ou qualquer nome que não seja `supabase`)
+   — o próprio pacote `@supabase/supabase-js` carregado pelo `<script>` já ocupa
+   `supabase` no escopo global da página. Declarar `const supabase = ...` por cima
+   disso trava a página inteira com `SyntaxError: Identifier 'supabase' has already
+   been declared`, e ela nem chega a carregar.
 3. Em cada função do `API` (getCategorias, getProdutos, criarPedido, getComboProdutos...), apague o bloco `// ---------- DEMO ----------` e descomente o bloco `// ---------- PRODUÇÃO (Supabase) ----------` logo abaixo. A assinatura de cada função continua igual — nenhuma outra página do site precisa mudar.
 4. Pode remover a linha `<script src="js/seed.js"></script>` de todas as páginas — ela só existe para popular o localStorage no modo demo.
 
