@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minha Cesta — Adega Zé Beer</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="topbar">
+      <div class="container topbar__linha">
+        <span class="icone" data-icone="mapPin"></span>
+        <span id="topbar-cidade">Santa Cruz das Palmeiras - SP</span>
+      </div>
+    </div>
+    <div class="cabecalho">
+      <div class="container cabecalho__linha">
+        <a href="index.html" class="marca">Zé Beer</a>
+        <a href="index.html" class="btn-cabecalho-texto">Continuar comprando</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container pagina-carrinho">
+    <h1 class="pagina-carrinho__titulo"><span class="icone" style="width:24px;height:24px;" data-icone="basket"></span> Minha Cesta</h1>
+
+    <div id="miolo-carrinho" hidden>
+      <div id="lista-itens-carrinho"><!-- itens inseridos via JS --></div>
+
+      <div class="resumo-pedido" style="margin-top: var(--sp-5);">
+        <h2>Resumo do Pedido</h2>
+        <div class="resumo-linha">
+          <span>Subtotal</span>
+          <span id="resumo-subtotal">R$ 0,00</span>
+        </div>
+        <div class="resumo-linha resumo-linha--total">
+          <span>Total</span>
+          <span id="resumo-total">R$ 0,00</span>
+        </div>
+        <br>
+        <a href="finalizar-pedido.html" class="btn btn-primario btn-bloco">Finalizar Pedido</a>
+      </div>
+    </div>
+
+    <div class="estado-vazio" id="carrinho-vazio" hidden>
+      <div class="estado-vazio__icone">🧺</div>
+      <h3>Sua cesta está vazia</h3>
+      <p>Que tal dar uma olhada no catálogo?</p>
+      <br>
+      <a href="index.html" class="btn btn-primario">Ver produtos</a>
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <div class="container rodape__linha">
+      <div>
+        <div class="rodape__endereco" id="rodape-endereco">Rua Campos Salles, 400 - Centro<br>Santa Cruz das Palmeiras - SP</div>
+        <a class="rodape__contato" id="rodape-whatsapp-link" href="#" target="_blank" rel="noopener">
+          <span class="icone" data-icone="whatsapp"></span><span id="rodape-whatsapp-texto">(19) 9 9999-9999</span>
+        </a>
+        <a class="rodape__contato" id="rodape-instagram-link" href="#" target="_blank" rel="noopener">
+          <span class="icone" data-icone="instagram"></span><span id="rodape-instagram-texto">@adega_zebeer</span>
+        </a>
+      </div>
+      <div class="rodape__logo"><img src="img/logo-adega-ze-beer.png" alt="Adega Zé Beer"></div>
+    </div>
+  </footer>
+  <div class="rodape-copyright">© Moriart Sistemas</div>
+
+  <script src="js/icons.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/api.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/carrinho.js"></script>
+</body>
+</html>

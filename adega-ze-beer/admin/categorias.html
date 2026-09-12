@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Categorias — Painel Adega Zé Beer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+
+    <div class="painel__topo-mobile">
+    <button type="button" class="painel__botao-menu" id="btn-abrir-menu" aria-label="Abrir menu">
+      <span class="icone" data-icone="hamburger"></span>
+    </button>
+    <div class="marca">Zé Beer</div>
+  </div>
+  <div class="painel__menu-fundo" id="painel-menu-fundo"></div>
+
+  <div class="painel">
+    <nav class="painel__menu" aria-label="Menu do painel">
+      <button type="button" class="painel__menu-fechar" id="btn-fechar-menu" aria-label="Fechar menu"><span class="icone" data-icone="close"></span></button>
+      <div class="marca">Zé Beer</div>
+                  <div class="painel__nav">
+        <a href="pedidos.html"><span class="painel__nav-icone" data-icone="box"></span> Pedidos recebidos</a>
+        <a href="dashboard.html"><span class="painel__nav-icone" data-icone="chart"></span> Dashboard</a>
+        <a href="produtos.html"><span class="painel__nav-icone" data-icone="bottle"></span> Produtos</a>
+        <a href="categorias.html" aria-current="page"><span class="painel__nav-icone" data-icone="tag"></span> Categorias</a>
+        <a href="combos.html"><span class="painel__nav-icone" data-icone="grid"></span> Combos</a>
+        <a href="copao.html"><span class="painel__nav-icone" data-icone="cup"></span> Copão</a>
+        <a href="configuracoes.html"><span class="painel__nav-icone" data-icone="gear"></span> Configurações</a>
+      </div>
+      <div class="painel__logo-menu">
+        <img src="../img/logo-adega-ze-beer.png" alt="Adega Zé Beer">
+      </div>
+      <div class="painel__rodape-menu">
+        <div class="painel__usuario" id="painel-usuario">—</div>
+        <button type="button" class="painel__sair" id="btn-sair">Sair</button>
+      </div>
+    </nav>
+
+    <main class="painel__conteudo">
+      <div class="painel__cabecalho">
+        <div>
+          <h1 class="painel__titulo">Categorias</h1>
+          <p class="painel__subtitulo">Organizam o catálogo e controlam quais carrosséis aparecem na vitrine</p>
+        </div>
+        <button class="btn btn-primario" id="btn-nova-categoria">+ Nova categoria</button>
+      </div>
+
+      <div class="faixa-aviso">
+        A coluna <strong>"Na vitrine"</strong> decide se a categoria vira um carrossel na home. Pra mudar a ordem, arraste a linha pela alça (☰) e solte na posição desejada — as setas continuam funcionando como alternativa. Em Configurações → Vitrine dá pra limitar quantos carrosséis marcados aparecem de uma vez.
+      </div>
+
+      <div class="bloco-painel">
+        <h2>Ofertas do dia</h2>
+        <div class="switch-destaque">
+          <span class="switch-destaque__texto">
+            Carrossel automático de produtos em oferta
+            <small>Reúne tudo que estiver marcado como "em oferta" em Produtos, num carrossel só no topo da vitrine.</small>
+          </span>
+          <button type="button" class="switch" id="toggle-ofertas-dia">
+            <span class="switch__trilho"><span class="switch__bola"></span></span>
+            <span class="switch__rotulo"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="tabela-wrap">
+        <table class="tabela">
+          <thead><tr><th style="width:36px;"></th><th style="width:70px;">Ordem</th><th>Nome</th><th>Produtos nessa categoria</th><th>Na vitrine</th><th>Ações</th></tr></thead>
+          <tbody id="tabela-categorias"><!-- inserido via JS --></tbody>
+        </table>
+      </div>
+      <div class="estado-vazio" id="categorias-vazio" hidden><p>Nenhuma categoria cadastrada ainda.</p></div>
+    </main>
+  </div>
+
+  <!-- ============ MODAL: CADASTRAR / EDITAR CATEGORIA ============ -->
+  <div class="modal-fundo" id="modal-categoria">
+    <div class="modal">
+      <div class="modal__cabecalho">
+        <h2 class="modal__titulo" id="modal-categoria-titulo">Nova categoria</h2>
+        <button class="modal__fechar" id="fechar-modal-categoria" aria-label="Fechar">✕</button>
+      </div>
+      <form id="form-categoria">
+        <input type="hidden" id="categoria-id">
+        <div class="campo">
+          <label for="categoria-nome">Nome da categoria</label>
+          <input type="text" id="categoria-nome" placeholder="Ex: Cervejas" required>
+        </div>
+        <label class="check-linha">
+          <input type="checkbox" id="categoria-mostrar-vitrine" checked>
+          Mostrar como carrossel na vitrine
+        </label>
+        <div class="modal__acoes">
+          <button type="button" class="btn btn-secundario" id="cancelar-modal-categoria">Cancelar</button>
+          <button type="submit" class="btn btn-primario" id="salvar-categoria">Salvar categoria</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/icons.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/api.js"></script>
+  <script src="js/auth-guard.js"></script>
+  <script src="js/painel-comum.js"></script>
+  <script src="../js/toast.js"></script>
+  <script src="js/categorias.js"></script>
+</body>
+</html>

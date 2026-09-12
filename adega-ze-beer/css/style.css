@@ -1,0 +1,280 @@
+/* =====================================================================
+   ADEGA ZÉ BEER — VITRINE (v2)
+   =====================================================================
+   Redesenho com base no material de referência do cliente: visual de
+   app nativo mobile, vermelho único e chapado (#B30A08, sem gradiente),
+   fundo branco, tipografia Roboto em tudo — exceto a marca "ZÉ BEER",
+   que usa a fonte customizada Vanilla Whale.
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
+@font-face {
+  font-family: 'Vanilla Whale';
+  src: url('../fonts/Vanilla-Whale.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- 1. TOKENS ---------- */
+:root {
+  --cor-primaria: #B30A08;
+  --cor-primaria-hover: #8F0806;
+  --cor-primaria-fraca: rgba(179, 10, 8, 0.08);
+  --cor-borda-marca: rgba(179, 10, 8, 0.35);
+  --cor-flutuante: #29B6F6;
+  --cor-flutuante-hover: #159BD6;
+
+  --cor-fundo: #FFFFFF;
+  --cor-superficie: #FFFFFF;
+  --cor-texto: #141414;
+  --cor-texto-suave: #808080;
+  --cor-borda: #E7E7E7;
+  --cor-preto: #000000;
+
+  --cor-sucesso: #2E8B4F;
+  --cor-alerta: #B5622B;
+  --cor-erro: #B30A08;
+
+  --fonte-marca: 'Vanilla Whale', sans-serif;
+  --fonte: 'Roboto', -apple-system, sans-serif;
+
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px;
+  --sp-6: 32px; --sp-7: 48px; --sp-8: 64px;
+
+  --raio-sm: 8px; --raio-md: 12px; --raio-lg: 18px; --raio-pill: 999px;
+  --sombra-card: 0 2px 10px rgba(0,0,0,0.08);
+  --sombra-elevada: 0 8px 28px rgba(0,0,0,0.18);
+}
+
+/* ---------- 2. RESET ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--fonte); background: var(--cor-fundo); color: var(--cor-texto); line-height: 1.45; min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+html { overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+input, select { font-family: inherit; font-size: inherit; }
+ul { list-style: none; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 2.5px solid var(--cor-primaria); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+.icone { width: 18px; height: 18px; display: inline-block; flex-shrink: 0; }
+.icone svg { width: 100%; height: 100%; }
+.container { max-width: 1180px; margin: 0 auto; padding: 0 var(--sp-4); }
+
+/* ---------- 3. CABEÇALHO ---------- */
+.topbar { background: var(--cor-primaria); padding: var(--sp-2) 0 0; }
+.topbar__linha { display: flex; align-items: center; justify-content: center; gap: 6px; color: rgba(255,255,255,0.92); font-size: 12.5px; font-weight: 500; padding-bottom: var(--sp-2); }
+.topbar__linha .icone { width: 13px; height: 13px; }
+
+.cabecalho { background: var(--cor-primaria); padding: var(--sp-2) 0 var(--sp-4); }
+.cabecalho__linha { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); }
+.marca { font-family: var(--fonte-marca); font-size: clamp(26px, 8vw, 36px); color: #fff; line-height: 1; letter-spacing: 0.01em; text-transform: uppercase; }
+
+.btn-sacola { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.22); color: #fff; padding: 9px 14px; border-radius: var(--raio-pill); font-weight: 700; font-size: clamp(12.5px, 3.2vw, 14px); transition: background 0.15s ease; white-space: nowrap; flex-shrink: 0; }
+.btn-sacola:hover { background: rgba(255,255,255,0.34); }
+.btn-sacola .icone { width: 19px; height: 19px; flex-shrink: 0; }
+
+.btn-cabecalho-texto { display: inline-flex; align-items: center; background: rgba(255,255,255,0.22); color: #fff; padding: 10px 16px; border-radius: var(--raio-pill); font-weight: 700; font-size: clamp(12px, 3vw, 13.5px); transition: background 0.15s ease; white-space: nowrap; }
+.btn-cabecalho-texto:hover { background: rgba(255,255,255,0.34); }
+
+/* ---------- 4. BUSCA ---------- */
+.bloco-busca { padding: var(--sp-4) calc(var(--sp-2) + var(--sp-4)) var(--sp-2); }
+@media (min-width: 700px) { .bloco-busca { max-width: 520px; margin: 0 auto; padding-left: var(--sp-4); padding-right: var(--sp-4); } }
+.campo-busca { display: flex; align-items: center; background: var(--cor-superficie); border: 1.5px solid var(--cor-primaria); border-radius: var(--raio-pill); padding: 4px 4px 4px 18px; box-shadow: var(--sombra-card); }
+.campo-busca input { border: none; outline: none; flex: 1; font-size: 15px; background: transparent; color: var(--cor-texto); min-width: 0; }
+.campo-busca input::placeholder { color: var(--cor-texto-suave); }
+.campo-busca__botao { width: 40px; height: 40px; border-radius: 999px; background: var(--cor-primaria); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.campo-busca__botao .icone { width: 19px; height: 19px; }
+.campo-busca__limpar { color: var(--cor-texto-suave); padding: 0 6px; flex-shrink: 0; }
+
+/* ---------- 5. TÍTULOS DE SEÇÃO ---------- */
+.secao { padding: var(--sp-5) 0 var(--sp-2); }
+.secao__titulo { font-size: clamp(18px, 5vw, 22px); font-weight: 900; color: var(--cor-texto); margin-bottom: var(--sp-3); }
+
+/* ---------- 6. CARROSSÉIS (estilo Netflix) ---------- */
+.bloco-carrossel { padding-bottom: var(--sp-3); }
+.bloco-carrossel__cabecalho { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--sp-3); gap: var(--sp-3); }
+.bloco-carrossel__setas { display: none; gap: var(--sp-2); flex-shrink: 0; }
+@media (min-width: 700px) { .bloco-carrossel__setas { display: flex; } }
+.bloco-carrossel__seta { width: 34px; height: 34px; border-radius: 999px; border: 1.5px solid var(--cor-borda); background: var(--cor-superficie); color: var(--cor-texto); display: flex; align-items: center; justify-content: center; transition: all 0.15s ease; }
+.bloco-carrossel__seta:hover { border-color: var(--cor-primaria); color: var(--cor-primaria); }
+.bloco-carrossel__seta:disabled { opacity: 0.3; cursor: default; }
+.bloco-carrossel__seta:disabled:hover { border-color: var(--cor-borda); color: var(--cor-texto); }
+.bloco-carrossel__seta .icone { width: 17px; height: 17px; }
+
+.bloco-carrossel__pista { display: flex; gap: var(--sp-3); overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; touch-action: pan-x; scroll-margin-top: 90px; }
+.bloco-carrossel__pista::-webkit-scrollbar { display: none; }
+
+/* ---------- 7. CARTÃO DE PRODUTO ---------- */
+.cartao-produto { flex: 0 0 165px; scroll-snap-align: start; background: var(--cor-superficie); border-radius: var(--raio-md); overflow: hidden; box-shadow: var(--sombra-card); display: flex; flex-direction: column; }
+@media (min-width: 640px) { .cartao-produto { flex-basis: 185px; } }
+.cartao-produto__imagem-wrap { position: relative; aspect-ratio: 1 / 1; background: var(--cor-primaria); }
+.cartao-produto__imagem-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.selo-oferta { position: absolute; top: var(--sp-2); left: var(--sp-2); background: rgba(0,0,0,0.72); color: #fff; font-size: 10.5px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; padding: 3px 9px; border-radius: var(--raio-sm); }
+
+.cartao-produto__corpo { padding: var(--sp-3); display: flex; flex-direction: column; gap: 3px; flex: 1; }
+.cartao-produto__topo { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; }
+.cartao-produto__categoria { font-size: 11px; color: var(--cor-texto-suave); text-transform: uppercase; letter-spacing: 0.03em; }
+.cartao-produto__preco-antigo { font-size: 11.5px; color: var(--cor-texto-suave); text-decoration: line-through; white-space: nowrap; }
+.cartao-produto__nome { font-weight: 700; font-size: 14px; line-height: 1.3; min-height: 2.6em; color: var(--cor-texto); }
+.cartao-produto__preco { font-weight: 700; font-size: 17px; color: var(--cor-primaria); margin-top: 2px; }
+.cartao-produto__rodape { margin-top: auto; padding-top: var(--sp-2); }
+
+.estado-vazio-carrossel { color: var(--cor-texto-suave); font-size: 13.5px; padding: var(--sp-5); background: var(--cor-superficie); border-radius: var(--raio-md); border: 1.5px dashed var(--cor-borda); }
+
+/* ---------- 8. BOTÕES ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-2); padding: 13px clamp(14px, 4vw, 24px); border-radius: var(--raio-md); font-weight: 700; font-size: clamp(13.5px, 3.6vw, 15px); transition: all 0.15s ease; white-space: nowrap; }
+.btn .icone { width: 18px; height: 18px; }
+.btn-primario { background: var(--cor-primaria); color: #fff; }
+.btn-primario:hover { background: var(--cor-primaria-hover); }
+.btn-primario:disabled { background: #D9B7B6; color: #fff; cursor: not-allowed; }
+.btn-preto { background: #111; color: #fff; }
+.btn-preto:hover { background: #000; }
+.btn-secundario { background: var(--cor-primaria-fraca); color: var(--cor-primaria); }
+.btn-secundario:hover { background: rgba(179,10,8,0.15); }
+.btn-bloco { width: 100%; }
+.btn-adicionar { width: 100%; background: var(--cor-primaria); color: #fff; padding: 10px var(--sp-3); border-radius: var(--raio-sm); font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.btn-adicionar:hover { background: var(--cor-primaria-hover); }
+.btn-adicionar:disabled { background: #D9B7B6; cursor: not-allowed; }
+
+/* ---------- 9. CARDS DE ENTRADA (Combo / Copão) ---------- */
+.cartao-promo { background: var(--cor-superficie); border-radius: var(--raio-lg); overflow: hidden; box-shadow: var(--sombra-card); margin-bottom: var(--sp-2); }
+.cartao-promo__banner { aspect-ratio: 16 / 8; background: var(--cor-primaria); }
+.cartao-promo__banner img { width: 100%; height: 100%; object-fit: cover; }
+.cartao-promo__corpo { padding: var(--sp-4); display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); }
+.cartao-promo__rotulo { font-size: 11px; color: var(--cor-texto-suave); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 2px; }
+.cartao-promo__texto { font-weight: 700; font-size: 14.5px; line-height: 1.3; }
+
+/* ---------- 10. BOTÃO FLUTUANTE ---------- */
+.btn-flutuante { position: fixed; left: 50%; bottom: var(--sp-4); transform: translateX(-50%); z-index: 60; background: var(--cor-flutuante); color: #fff; padding: 14px 28px; border-radius: var(--raio-pill); font-weight: 700; font-size: 15px; box-shadow: var(--sombra-elevada); display: flex; align-items: center; gap: 10px; transition: transform 0.2s ease, opacity 0.2s ease, background 0.15s ease; }
+.btn-flutuante:hover { background: var(--cor-flutuante-hover); }
+.btn-flutuante[hidden] { display: flex !important; opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(16px); }
+.btn-flutuante__contador { background: rgba(255,255,255,0.28); border-radius: 999px; padding: 2px 9px; font-size: 13px; }
+
+/* ---------- 11. ESTADOS ---------- */
+.estado-vazio { text-align: center; padding: var(--sp-8) var(--sp-4); color: var(--cor-texto-suave); }
+.estado-vazio__icone { font-size: 40px; margin-bottom: var(--sp-3); }
+.estado-vazio h3 { color: var(--cor-texto); margin-bottom: var(--sp-2); font-size: 18px; font-weight: 700; }
+
+.skeleton { background: linear-gradient(90deg, #eee 25%, #f7f7f7 37%, #eee 63%); background-size: 400% 100%; animation: brilho-skeleton 1.4s ease infinite; border-radius: var(--raio-md); }
+@keyframes brilho-skeleton { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+.skeleton-carrossel { display: flex; gap: var(--sp-3); }
+.skeleton-cartao { flex: 0 0 165px; height: 0; padding-bottom: 148%; }
+
+.faixa-aviso { background: #FCEBEA; color: var(--cor-primaria); border: 1px solid rgba(179,10,8,0.25); border-radius: var(--raio-sm); padding: var(--sp-3) var(--sp-4); font-size: 13px; margin-bottom: var(--sp-4); }
+
+/* ---------- 12. CARRINHO / CESTA ---------- */
+.pagina-carrinho { padding-top: var(--sp-5); padding-bottom: var(--sp-8); }
+.pagina-carrinho__titulo { font-size: clamp(19px, 5.5vw, 24px); font-weight: 900; margin-bottom: var(--sp-4); display: flex; align-items: center; gap: 10px; }
+.miolo-carrinho { display: grid; grid-template-columns: 1fr; gap: var(--sp-5); align-items: start; }
+@media (min-width: 860px) { .miolo-carrinho { grid-template-columns: 1.7fr 1fr; } }
+
+.item-carrinho { display: grid; grid-template-columns: 68px 1fr auto; gap: var(--sp-3); align-items: center; background: var(--cor-superficie); border-radius: var(--raio-md); padding: var(--sp-3); box-shadow: var(--sombra-card); margin-bottom: var(--sp-3); }
+.item-carrinho__imagem { width: 68px; height: 68px; border-radius: var(--raio-sm); overflow: hidden; background: var(--cor-primaria); }
+.item-carrinho__imagem img { width: 100%; height: 100%; object-fit: cover; }
+.item-carrinho__nome { font-weight: 700; font-size: 14.5px; margin-bottom: 2px; }
+.item-carrinho__preco-unit { font-size: 12.5px; color: var(--cor-texto-suave); }
+.item-carrinho__controles { display: flex; flex-direction: column; align-items: flex-end; gap: var(--sp-2); }
+.item-carrinho__subtotal { font-weight: 700; color: var(--cor-primaria); font-size: 15px; }
+.item-carrinho__remover { font-size: 12.5px; font-weight: 600; color: var(--cor-texto); }
+.item-carrinho__remover:hover { color: var(--cor-erro); }
+
+.seletor-qtd { display: inline-flex; align-items: center; gap: 10px; }
+.seletor-qtd button { width: 26px; height: 26px; border-radius: 999px; font-size: 15px; font-weight: 700; color: #fff; background: var(--cor-primaria); display: flex; align-items: center; justify-content: center; }
+.seletor-qtd button:hover { background: var(--cor-primaria-hover); }
+.seletor-qtd .icone { width: 12px; height: 12px; }
+.seletor-qtd input, .seletor-qtd span.valor { min-width: 18px; text-align: center; font-weight: 700; font-size: 14px; border: none; background: transparent; }
+
+.resumo-pedido { background: var(--cor-superficie); border-radius: var(--raio-md); padding: var(--sp-5); box-shadow: var(--sombra-card); position: sticky; top: 24px; }
+.resumo-pedido h2 { font-size: 16px; font-weight: 800; margin-bottom: var(--sp-4); }
+.resumo-linha { display: flex; justify-content: space-between; font-size: 14px; color: var(--cor-texto-suave); margin-bottom: var(--sp-2); }
+.resumo-linha--total { font-weight: 800; color: var(--cor-texto); font-size: 18px; border-top: 1px solid var(--cor-borda); padding-top: var(--sp-3); margin-top: var(--sp-3); }
+.resumo-linha--total span:last-child { color: var(--cor-primaria); }
+
+/* ---------- 13. FORMULÁRIO / CHECKOUT ---------- */
+.form-pedido { background: var(--cor-superficie); border-radius: var(--raio-md); padding: var(--sp-5); box-shadow: var(--sombra-card); }
+.campo { margin-bottom: var(--sp-4); }
+.campo label { display: block; font-size: 13.5px; font-weight: 700; margin-bottom: var(--sp-2); color: var(--cor-texto); }
+.campo label .opcional { font-weight: 400; color: var(--cor-texto-suave); }
+.campo input, .campo select { width: 100%; padding: 13px var(--sp-3); border: 1.5px solid var(--cor-borda-marca); border-radius: var(--raio-sm); background: var(--cor-superficie); font-size: 14.5px; color: var(--cor-texto); }
+.campo input:focus, .campo select:focus { border-color: var(--cor-primaria); }
+.campo input[readonly] { background: #FAFAFA; color: var(--cor-texto-suave); }
+.campo small.dica { display: block; margin-top: var(--sp-1); color: var(--cor-texto-suave); font-size: 12px; }
+.campo small.erro-campo { display: none; margin-top: var(--sp-1); color: var(--cor-erro); font-size: 12px; font-weight: 700; }
+.campo.tem-erro input { border-color: var(--cor-erro); border-width: 2px; }
+.campo.tem-erro small.erro-campo { display: block; }
+.linha-campos { display: grid; grid-template-columns: 1fr; gap: var(--sp-3); }
+@media (min-width: 560px) { .linha-campos--2 { grid-template-columns: 1fr 1fr; } .linha-campos--cep { grid-template-columns: 140px 1fr; } }
+
+.opcoes-entrega { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); margin-bottom: var(--sp-5); }
+.opcao-entrega { position: relative; border: 1.5px solid var(--cor-borda); border-radius: var(--raio-md); padding: var(--sp-4) var(--sp-3); cursor: pointer; text-align: center; transition: all 0.15s ease; }
+.opcao-entrega input { position: absolute; opacity: 0; }
+.opcao-entrega .icone { width: 26px; height: 26px; margin: 0 auto var(--sp-2); color: var(--cor-texto); }
+.opcao-entrega__titulo { font-weight: 800; font-size: 14px; }
+.opcao-entrega__subtitulo { font-size: 12px; color: var(--cor-texto-suave); margin-top: 2px; font-weight: 700; }
+.opcao-entrega.selecionada { border-color: var(--cor-primaria); border-width: 2px; }
+.opcao-entrega.selecionada .icone, .opcao-entrega.selecionada .opcao-entrega__titulo { color: var(--cor-primaria); }
+
+.bloco-radio { background: var(--cor-superficie); border-radius: var(--raio-md); padding: var(--sp-4); box-shadow: var(--sombra-card); margin-bottom: var(--sp-4); }
+.bloco-radio h3 { font-size: 15px; font-weight: 800; margin-bottom: 2px; }
+.bloco-radio__aviso { font-size: 11.5px; color: var(--cor-primaria); font-style: italic; margin-bottom: var(--sp-3); }
+.linha-radio { display: flex; align-items: center; gap: 10px; padding: 9px 0; font-size: 14.5px; font-weight: 500; cursor: pointer; }
+.linha-radio input[type="radio"] { width: 19px; height: 19px; accent-color: var(--cor-primaria); flex-shrink: 0; }
+.linha-radio__extra { color: var(--cor-primaria); font-weight: 700; font-size: 13px; }
+.campo-troco { margin-top: var(--sp-3); padding-top: var(--sp-3); border-top: 1px dashed var(--cor-borda); }
+.campo-troco__calculo { font-size: 13px; color: var(--cor-texto-suave); margin-top: 6px; }
+.bloco-pix { margin-top: var(--sp-3); padding-top: var(--sp-3); border-top: 1px dashed var(--cor-borda); font-size: 13.5px; line-height: 1.8; }
+.bloco-pix strong { display: block; font-size: 15px; color: var(--cor-primaria); word-break: break-all; }
+
+/* ---------- 14. TOASTS ---------- */
+.toast-wrap { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; flex-direction: column; gap: var(--sp-2); width: min(92vw, 360px); }
+.toast { background: #1A1A1A; color: #fff; padding: var(--sp-3) var(--sp-4); border-radius: var(--raio-md); font-size: 13.5px; font-weight: 600; box-shadow: var(--sombra-elevada); display: flex; align-items: center; gap: var(--sp-2); animation: entra-toast 0.2s ease; }
+.toast--sucesso { background: var(--cor-sucesso); }
+.toast--erro { background: var(--cor-erro); }
+@keyframes entra-toast { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ---------- 15. CONFIRMAÇÃO ---------- */
+.confirmacao { text-align: center; padding: var(--sp-8) var(--sp-4); max-width: 460px; margin: 0 auto; }
+.confirmacao__icone { color: var(--cor-primaria); margin: 0 auto var(--sp-4); width: 64px; height: 64px; }
+.confirmacao h1 { font-size: 24px; font-weight: 900; margin-bottom: var(--sp-2); }
+.confirmacao > p { color: var(--cor-texto); margin-bottom: var(--sp-5); font-weight: 500; }
+.confirmacao__tempo { font-weight: 700; font-size: 14.5px; margin-bottom: var(--sp-3); }
+.confirmacao__caixa { border: 1.5px solid var(--cor-borda); border-radius: var(--raio-md); padding: var(--sp-6) var(--sp-4); margin-bottom: var(--sp-5); font-weight: 700; font-size: 14px; }
+
+/* ---------- 16. RODAPÉ ---------- */
+.rodape { background: var(--cor-primaria); color: #fff; padding: var(--sp-6) 0 var(--sp-5); margin-top: var(--sp-7); }
+.rodape__linha { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-4); flex-wrap: wrap; }
+.rodape__endereco { font-weight: 700; font-size: 14.5px; line-height: 1.6; margin-bottom: var(--sp-4); }
+.rodape__contato { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: var(--sp-2); }
+.rodape__contato .icone { width: 18px; height: 18px; color: #fff; }
+.rodape__logo { width: 92px; height: 92px; flex-shrink: 0; }
+.rodape__logo img { width: 100%; height: 100%; object-fit: contain; }
+.rodape-copyright { background: #000; color: rgba(255,255,255,0.75); text-align: center; font-size: 11.5px; padding: var(--sp-2) 0; }
+
+/* ---------- 17. MONTE SEU COMBO / COPÃO ---------- */
+.pagina-monte { padding-top: var(--sp-5); padding-bottom: 100px; }
+.pagina-monte__titulo { font-size: clamp(19px, 5.5vw, 24px); font-weight: 900; margin-bottom: var(--sp-4); }
+
+.caixa-info { border: 1.5px solid var(--cor-borda); border-radius: var(--raio-md); padding: var(--sp-4); margin-bottom: var(--sp-5); font-weight: 700; font-size: 14px; line-height: 1.9; }
+
+.cartao-produto--selecionavel { cursor: pointer; transition: opacity 0.15s ease, box-shadow 0.15s ease; border: 2px solid transparent; }
+.cartao-produto--selecionavel.esmaecido { opacity: 0.4; }
+.cartao-produto--selecionavel.selecionado { border-color: var(--cor-primaria); box-shadow: var(--sombra-elevada); }
+.cartao-produto__marca-selecionado { position: absolute; top: var(--sp-2); right: var(--sp-2); width: 24px; height: 24px; border-radius: 999px; background: var(--cor-primaria); color: #fff; display: flex; align-items: center; justify-content: center; }
+.cartao-produto__marca-selecionado .icone { width: 14px; height: 14px; }
+
+.lista-sabores { background: var(--cor-superficie); border-radius: var(--raio-md); box-shadow: var(--sombra-card); padding: var(--sp-2) var(--sp-4); }
+.linha-sabor { display: flex; align-items: center; gap: var(--sp-3); padding: 12px 0; border-bottom: 1px solid var(--cor-borda); font-size: 15px; font-weight: 600; }
+.linha-sabor:last-child { border-bottom: none; }
+.linha-sabor__nome { flex: 1; }
+.linha-sabor .seletor-qtd button:disabled { background: var(--cor-borda); color: #999; cursor: not-allowed; }
+
+.contador-sabores { text-align: right; font-size: 13px; color: var(--cor-texto-suave); font-weight: 700; margin: var(--sp-2) 0 var(--sp-4); }
+.contador-sabores.completo { color: var(--cor-sucesso); }
+
+.barra-acoes-fixa { position: fixed; left: 0; right: 0; bottom: 0; z-index: 55; display: flex; gap: var(--sp-3); padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + env(safe-area-inset-bottom)); background: #fff; box-shadow: 0 -6px 20px rgba(0,0,0,0.1); }
+.barra-acoes-fixa .btn { flex: 1; }
+

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedido Recebido — Adega Zé Beer</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="topbar">
+      <div class="container topbar__linha">
+        <span class="icone" data-icone="mapPin"></span>
+        <span id="topbar-cidade">Santa Cruz das Palmeiras - SP</span>
+      </div>
+    </div>
+    <div class="cabecalho">
+      <div class="container cabecalho__linha" style="justify-content:center;">
+        <a href="index.html" class="marca">Zé Beer</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="confirmacao" id="confirmacao" hidden>
+      <div class="confirmacao__icone"><span class="icone" style="width:100%;height:100%;" data-icone="check"></span></div>
+      <h1>Pedido recebido!</h1>
+      <p id="confirmacao-texto">Seu pedido já caiu no painel da loja.</p>
+
+      <div class="confirmacao__tempo" id="confirmacao-tempo"></div>
+
+      <div class="confirmacao__caixa">
+        <span id="confirmacao-data"></span>
+      </div>
+
+      <a href="index.html" class="btn btn-primario btn-bloco">Voltar a Loja</a>
+    </div>
+
+    <div class="estado-vazio" id="confirmacao-vazia" hidden>
+      <div class="estado-vazio__icone">🔍</div>
+      <h3>Nada por aqui</h3>
+      <p>Não encontramos um pedido recente. Que tal fazer um novo?</p>
+      <br>
+      <a href="index.html" class="btn btn-primario">Ver produtos</a>
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <div class="container rodape__linha">
+      <div>
+        <div class="rodape__endereco" id="rodape-endereco">Rua Campos Salles, 400 - Centro<br>Santa Cruz das Palmeiras - SP</div>
+        <a class="rodape__contato" id="rodape-whatsapp-link" href="#" target="_blank" rel="noopener">
+          <span class="icone" data-icone="whatsapp"></span><span id="rodape-whatsapp-texto">(19) 9 9999-9999</span>
+        </a>
+        <a class="rodape__contato" id="rodape-instagram-link" href="#" target="_blank" rel="noopener">
+          <span class="icone" data-icone="instagram"></span><span id="rodape-instagram-texto">@adega_zebeer</span>
+        </a>
+      </div>
+      <div class="rodape__logo"><img src="img/logo-adega-ze-beer.png" alt="Adega Zé Beer"></div>
+    </div>
+  </footer>
+  <div class="rodape-copyright">© Moriart Sistemas</div>
+
+  <script src="js/icons.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/api.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const parametros = new URLSearchParams(window.location.search);
+      const id = parametros.get('pedido');
+      if (!id) { document.getElementById('confirmacao-vazia').hidden = false; return; }
+
+      const { data: pedido } = await API.getPedidoPorId(id);
+      const { data: config } = await API.getConfigLoja();
+      if (!pedido) { document.getElementById('confirmacao-vazia').hidden = false; return; }
+
+      if (config?.cidade_regiao) document.getElementById('topbar-cidade').textContent = config.cidade_regiao;
+      if (config?.endereco) document.getElementById('rodape-endereco').innerHTML = config.endereco.replace(/, /, ',<br>');
+      if (config?.whatsapp) {
+        document.getElementById('rodape-whatsapp-texto').textContent = config.whatsapp;
+        document.getElementById('rodape-whatsapp-link').href = `https://wa.me/${config.whatsapp}`;
+      }
+      if (config?.instagram_url) document.getElementById('rodape-instagram-link').href = config.instagram_url;
+
+      const ehRetirada = pedido.tipo_entrega === 'retirada';
+      document.getElementById('confirmacao-texto').textContent = ehRetirada
+        ? 'Assim que estiver pronto, é só passar pra retirar.'
+        : 'A Adega Zé Beer vai preparar tudo e sair pra entrega.';
+
+      const tempo = ehRetirada ? config?.tempo_medio_retirada : config?.tempo_medio_entrega;
+      if (tempo) {
+        document.getElementById('confirmacao-tempo').textContent = `Tempo médio para ${ehRetirada ? 'retirada' : 'entrega'} ${tempo}`;
+      }
+
+      const dataPedido = new Date(pedido.criado_em);
+      const dataFormatada = dataPedido.toLocaleDateString('pt-BR') + ' às ' + dataPedido.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('confirmacao-data').textContent = `Recebido em ${dataFormatada}`;
+
+      document.getElementById('confirmacao').hidden = false;
+    });
+  </script>
+</body>
+</html>

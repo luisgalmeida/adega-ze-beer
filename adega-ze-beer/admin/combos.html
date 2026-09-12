@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Combos — Painel Adega Zé Beer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+
+    <div class="painel__topo-mobile">
+    <button type="button" class="painel__botao-menu" id="btn-abrir-menu" aria-label="Abrir menu">
+      <span class="icone" data-icone="hamburger"></span>
+    </button>
+    <div class="marca">Zé Beer</div>
+  </div>
+  <div class="painel__menu-fundo" id="painel-menu-fundo"></div>
+
+  <div class="painel">
+    <nav class="painel__menu" aria-label="Menu do painel">
+      <button type="button" class="painel__menu-fechar" id="btn-fechar-menu" aria-label="Fechar menu"><span class="icone" data-icone="close"></span></button>
+      <div class="marca">Zé Beer</div>
+            <div class="painel__nav">
+        <a href="pedidos.html"><span class="painel__nav-icone" data-icone="box"></span> Pedidos recebidos</a>
+        <a href="dashboard.html"><span class="painel__nav-icone" data-icone="chart"></span> Dashboard</a>
+        <a href="produtos.html"><span class="painel__nav-icone" data-icone="bottle"></span> Produtos</a>
+        <a href="categorias.html"><span class="painel__nav-icone" data-icone="tag"></span> Categorias</a>
+        <a href="combos.html" aria-current="page"><span class="painel__nav-icone" data-icone="grid"></span> Combos</a>
+        <a href="copao.html"><span class="painel__nav-icone" data-icone="cup"></span> Copão</a>
+        <a href="configuracoes.html"><span class="painel__nav-icone" data-icone="gear"></span> Configurações</a>
+      </div>
+      <div class="painel__logo-menu">
+        <img src="../img/logo-adega-ze-beer.png" alt="Adega Zé Beer">
+      </div>
+      <div class="painel__rodape-menu">
+        <div class="painel__usuario" id="painel-usuario">—</div>
+        <button type="button" class="painel__sair" id="btn-sair">Sair</button>
+      </div>
+    </nav>
+
+    <main class="painel__conteudo">
+      <div class="painel__cabecalho">
+        <div>
+          <h1 class="painel__titulo">Combos</h1>
+          <p class="painel__subtitulo">Produtos exclusivos de "Monte seu Combo", sabores de gelo e o limite por combo</p>
+        </div>
+      </div>
+
+      <!-- ============ CONFIGURAÇÃO: banner, texto e limite de gelos ============ -->
+      <div class="bloco-painel">
+        <h2>Configuração do combo</h2>
+        <div class="campo">
+          <label for="combo-banner-url">Imagem do banner (aparece na home e no topo da página)</label>
+          <input type="url" id="combo-banner-url" placeholder="https://...">
+          <small class="dica">Tamanho recomendado: 1200x600px (proporção 2:1). O sistema ajusta a imagem automaticamente pro celular e pro computador — não precisa cortar em tamanhos diferentes.</small>
+        </div>
+        <div class="campo">
+          <label for="combo-texto-info">Texto abaixo da imagem</label>
+          <textarea id="combo-texto-info" rows="4" style="width:100%; padding:13px; border:1.5px solid var(--cor-borda-marca); border-radius:8px; font-family:inherit; font-size:14.5px; resize:vertical;" placeholder="Todos os combos acompanham&#10;4 gelos&#10;4 copos&#10;4 canudos"></textarea>
+          <small class="dica">Cada linha vira uma linha separada na tela do cliente.</small>
+        </div>
+        <div class="campo" style="max-width:280px; margin-bottom:0;">
+          <label for="combo-gelo-max">Quantos gelos cada combo inclui</label>
+          <input type="number" id="combo-gelo-max" min="1" step="1">
+          <small class="dica">O cliente precisa distribuir exatamente essa quantidade entre os sabores. Copos e canudos acompanham na mesma quantidade.</small>
+        </div>
+        <button type="button" class="btn btn-primario" id="btn-salvar-gelo-max" style="margin-top:12px;">Salvar</button>
+      </div>
+
+      <!-- ============ SABORES DE GELO (compartilhado com Copão) ============ -->
+      <div class="bloco-painel">
+        <h2>Sabores de gelo</h2>
+        <p class="nota-secao">Essa lista também é usada na etapa "Escolha o gelo" do Monte seu Copão.</p>
+        <div class="lista-itens-simples" id="lista-sabores"></div>
+        <form class="form-item-simples" id="form-sabor">
+          <div class="campo">
+            <label for="novo-sabor-nome">Novo sabor</label>
+            <input type="text" id="novo-sabor-nome" placeholder="Ex: Abacaxi" required>
+          </div>
+          <button type="submit" class="btn btn-secundario">+ Adicionar</button>
+        </form>
+      </div>
+
+      <!-- ============ PRODUTOS DE COMBO ============ -->
+      <div class="painel__cabecalho">
+        <h2 class="painel__titulo" style="font-size:19px;">Produtos de Combo</h2>
+        <button class="btn btn-primario" id="btn-novo-combo">+ Novo combo</button>
+      </div>
+
+      <div class="tabela-wrap">
+        <table class="tabela">
+          <thead><tr><th></th><th>Nome</th><th>Preço</th><th>Status</th><th>Ações</th></tr></thead>
+          <tbody id="tabela-combos"></tbody>
+        </table>
+      </div>
+      <div class="estado-vazio" id="combos-vazio" hidden><p>Nenhum combo cadastrado ainda.</p></div>
+    </main>
+  </div>
+
+  <!-- ============ MODAL: CADASTRAR / EDITAR COMBO ============ -->
+  <div class="modal-fundo" id="modal-combo">
+    <div class="modal">
+      <div class="modal__cabecalho">
+        <h2 class="modal__titulo" id="modal-combo-titulo">Novo combo</h2>
+        <button class="modal__fechar" id="fechar-modal-combo" aria-label="Fechar">✕</button>
+      </div>
+      <form id="form-combo">
+        <input type="hidden" id="combo-id">
+        <div class="campo">
+          <label for="combo-nome">Nome</label>
+          <input type="text" id="combo-nome" required>
+        </div>
+        <div class="campo">
+          <label for="combo-preco">Preço (R$)</label>
+          <input type="number" id="combo-preco" step="0.01" min="0" required>
+        </div>
+        <div class="campo">
+          <label for="combo-imagem">URL da imagem <span class="opcional">(opcional)</span></label>
+          <input type="url" id="combo-imagem" placeholder="https://...">
+        </div>
+        <div class="campo">
+          <label for="combo-descricao">Descrição</label>
+          <input type="text" id="combo-descricao">
+        </div>
+        <label class="check-linha">
+          <input type="checkbox" id="combo-disponivel" checked>
+          Disponível na vitrine
+        </label>
+        <div class="modal__acoes">
+          <button type="button" class="btn btn-secundario" id="cancelar-modal-combo">Cancelar</button>
+          <button type="submit" class="btn btn-primario" id="salvar-combo">Salvar combo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/icons.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/api.js"></script>
+  <script src="js/auth-guard.js"></script>
+  <script src="js/painel-comum.js"></script>
+  <script src="../js/toast.js"></script>
+  <script src="js/combos.js"></script>
+</body>
+</html>

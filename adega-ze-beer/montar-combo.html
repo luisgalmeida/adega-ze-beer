@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monte seu Combo — Adega Zé Beer</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="topbar">
+      <div class="container topbar__linha">
+        <span class="icone" data-icone="mapPin"></span>
+        <span id="topbar-cidade">Santa Cruz das Palmeiras - SP</span>
+      </div>
+    </div>
+    <div class="cabecalho">
+      <div class="container cabecalho__linha">
+        <a href="index.html" class="marca">Zé Beer</a>
+        <a href="carrinho.html" class="btn-sacola" aria-label="Ver cesta">
+          <span class="icone" data-icone="basket"></span>
+          <span data-cesta-valor>R$ 0,00</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container pagina-monte">
+    <button type="button" class="btn btn-preto" style="margin-bottom: var(--sp-4);" onclick="history.back()">
+      <span class="icone" data-icone="chevronLeft"></span> Voltar
+    </button>
+    <h1 class="pagina-monte__titulo">Monte seu Combo</h1>
+
+    <div class="cartao-promo" style="margin-bottom: var(--sp-4);">
+      <div class="cartao-promo__banner"><img src="https://placehold.co/700x350/B30A08/B30A08?text=%20" alt=""></div>
+    </div>
+    <div class="caixa-info" id="caixa-info-combo">Todos os combos acompanham<br>4 gelos<br>4 copos<br>4 canudos</div>
+
+    <div id="carregando-combo">
+      <div class="skeleton-carrossel"><div class="skeleton skeleton-cartao"></div><div class="skeleton skeleton-cartao"></div></div>
+    </div>
+
+    <div id="conteudo-combo" hidden>
+      <h2 class="secao__titulo">Selecione 1 Combo</h2>
+      <div class="bloco-carrossel">
+        <div class="bloco-carrossel__pista" id="pista-combos"></div>
+      </div>
+
+      <h2 class="secao__titulo" style="margin-top: var(--sp-5);" id="titulo-sabores">Selecione até 4 gelos</h2>
+      <div class="lista-sabores" id="lista-sabores"></div>
+      <div class="contador-sabores" id="contador-sabores">0 de 4 selecionados</div>
+    </div>
+
+    <div class="estado-vazio" id="combo-vazio" hidden>
+      <div class="estado-vazio__icone">🥤</div>
+      <h3>Nenhum combo disponível no momento</h3>
+      <p>Volte mais tarde ou fale com a loja.</p>
+    </div>
+  </main>
+
+  <div class="barra-acoes-fixa">
+    <button type="button" class="btn btn-primario" id="btn-continuar-comprando">Continuar comprando</button>
+    <button type="button" class="btn btn-preto" id="btn-finalizar-pedido" disabled>Finalizar Pedido</button>
+  </div>
+
+  <script src="js/icons.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/api.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/montar-combo.js"></script>
+</body>
+</html>

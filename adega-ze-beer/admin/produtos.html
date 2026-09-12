@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Produtos — Painel Adega Zé Beer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+
+    <div class="painel__topo-mobile">
+    <button type="button" class="painel__botao-menu" id="btn-abrir-menu" aria-label="Abrir menu">
+      <span class="icone" data-icone="hamburger"></span>
+    </button>
+    <div class="marca">Zé Beer</div>
+  </div>
+  <div class="painel__menu-fundo" id="painel-menu-fundo"></div>
+
+  <div class="painel">
+    <nav class="painel__menu" aria-label="Menu do painel">
+      <button type="button" class="painel__menu-fechar" id="btn-fechar-menu" aria-label="Fechar menu"><span class="icone" data-icone="close"></span></button>
+      <div class="marca">Zé Beer</div>
+                  <div class="painel__nav">
+        <a href="pedidos.html"><span class="painel__nav-icone" data-icone="box"></span> Pedidos recebidos</a>
+        <a href="dashboard.html"><span class="painel__nav-icone" data-icone="chart"></span> Dashboard</a>
+        <a href="produtos.html" aria-current="page"><span class="painel__nav-icone" data-icone="bottle"></span> Produtos</a>
+        <a href="categorias.html"><span class="painel__nav-icone" data-icone="tag"></span> Categorias</a>
+        <a href="combos.html"><span class="painel__nav-icone" data-icone="grid"></span> Combos</a>
+        <a href="copao.html"><span class="painel__nav-icone" data-icone="cup"></span> Copão</a>
+        <a href="configuracoes.html"><span class="painel__nav-icone" data-icone="gear"></span> Configurações</a>
+      </div>
+      <div class="painel__logo-menu">
+        <img src="../img/logo-adega-ze-beer.png" alt="Adega Zé Beer">
+      </div>
+      <div class="painel__rodape-menu">
+        <div class="painel__usuario" id="painel-usuario">—</div>
+        <button type="button" class="painel__sair" id="btn-sair">Sair</button>
+      </div>
+    </nav>
+
+    <main class="painel__conteudo">
+      <div class="painel__cabecalho">
+        <div>
+          <h1 class="painel__titulo">Produtos</h1>
+          <p class="painel__subtitulo">Cadastre, edite e controle a disponibilidade do catálogo</p>
+        </div>
+        <button class="btn btn-primario" id="btn-novo-produto">+ Novo produto</button>
+      </div>
+
+      <div class="barra-acoes" style="flex-wrap: wrap; gap: var(--sp-3);">
+        <label class="busca-painel">
+          🔍 <input type="search" id="busca-produtos" placeholder="Buscar por nome...">
+        </label>
+        <select id="filtro-categoria" class="filtro-select">
+          <option value="">Todas as categorias</option>
+        </select>
+        <select id="filtro-oferta" class="filtro-select">
+          <option value="">Oferta: todos</option>
+          <option value="sim">Em oferta</option>
+          <option value="nao">Sem oferta</option>
+        </select>
+        <select id="filtro-status" class="filtro-select">
+          <option value="">Status: todos</option>
+          <option value="disponivel">Disponível</option>
+          <option value="indisponivel">Indisponível</option>
+        </select>
+        <button type="button" class="tabela__link-acao" id="btn-limpar-filtros">Limpar filtros</button>
+      </div>
+
+      <div class="tabela-wrap tabela-desktop-apenas">
+        <table class="tabela">
+          <thead>
+            <tr><th></th><th>Nome</th><th>Categoria</th><th>Preço</th><th>Oferta</th><th>Status</th><th>Ações</th></tr>
+          </thead>
+          <tbody id="tabela-produtos"><!-- inserido via JS --></tbody>
+        </table>
+      </div>
+
+      <!-- Celular: só imagem, nome e preço — clique no cartão abre a edição -->
+      <div class="lista-cartoes-mobile" id="lista-produtos-mobile"></div>
+
+      <div class="estado-vazio" id="produtos-vazio" hidden><p>Nenhum produto cadastrado ainda.</p></div>
+    </main>
+  </div>
+
+  <!-- ============ MODAL: CADASTRAR / EDITAR PRODUTO ============ -->
+  <div class="modal-fundo" id="modal-produto">
+    <div class="modal">
+      <div class="modal__cabecalho">
+        <h2 class="modal__titulo" id="modal-produto-titulo">Novo produto</h2>
+        <button class="modal__fechar" id="fechar-modal-produto" aria-label="Fechar">✕</button>
+      </div>
+      <form id="form-produto">
+        <input type="hidden" id="produto-id">
+        <div class="campo">
+          <label for="produto-nome">Nome</label>
+          <input type="text" id="produto-nome" required>
+        </div>
+        <div class="campo">
+          <label for="produto-categoria">Categoria</label>
+          <select id="produto-categoria" required></select>
+        </div>
+        <div class="linha-campos linha-campos--2">
+          <div class="campo">
+            <label for="produto-preco">Preço (R$)</label>
+            <input type="number" id="produto-preco" step="0.01" min="0" required>
+          </div>
+          <div class="campo">
+            <label for="produto-imagem">URL da imagem <span class="opcional">(opcional)</span></label>
+            <input type="url" id="produto-imagem" placeholder="https://...">
+          </div>
+        </div>
+        <div class="campo">
+          <label for="produto-descricao">Descrição</label>
+          <input type="text" id="produto-descricao">
+        </div>
+        <label class="check-linha">
+          <input type="checkbox" id="produto-disponivel" checked>
+          Disponível na vitrine
+        </label>
+
+        <div class="bloco-promocao" id="bloco-promocao">
+          <label class="check-linha" style="margin-bottom:0;">
+            <input type="checkbox" id="produto-em-oferta">
+            Colocar este produto em oferta
+          </label>
+          <div class="bloco-promocao__campo">
+            <label for="produto-preco-oferta">Preço da oferta (R$)</label>
+            <input type="number" id="produto-preco-oferta" step="0.01" min="0">
+            <small class="dica">Aparece na vitrine com o preço antigo riscado e o selo de desconto.</small>
+          </div>
+        </div>
+
+        <div class="modal__acoes">
+          <button type="button" class="btn btn-secundario" id="cancelar-modal-produto">Cancelar</button>
+          <button type="submit" class="btn btn-primario" id="salvar-produto">Salvar produto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/icons.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/api.js"></script>
+  <script src="js/auth-guard.js"></script>
+  <script src="js/painel-comum.js"></script>
+  <script src="../js/toast.js"></script>
+  <script src="js/produtos.js"></script>
+</body>
+</html>
