@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finalizar Pedido — Adega Zé Beer</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="topbar">
+      <div class="container topbar__linha">
+        <span class="icone" data-icone="mapPin"></span>
+        <span id="topbar-cidade">Santa Cruz das Palmeiras - SP</span>
+      </div>
+    </div>
+    <div class="cabecalho">
+      <div class="container cabecalho__linha">
+        <a href="index.html" class="marca">Zé Beer</a>
+        <a href="carrinho.html" class="btn-cabecalho-texto">Voltar à Cesta</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container pagina-carrinho">
+    <h1 class="pagina-carrinho__titulo">Finalizar Pedido</h1>
+
+    <div id="miolo-finalizar" hidden>
+      <form id="form-pedido" novalidate>
+
+        <div class="campo">
+          <label>Como você quer receber seu pedido?</label>
+          <div class="opcoes-entrega">
+            <label class="opcao-entrega" data-opcao="entrega">
+              <input type="radio" name="tipo_entrega" value="entrega">
+              <span class="icone" data-icone="house"></span>
+              <div class="opcao-entrega__titulo">Receber em Casa</div>
+              <div class="opcao-entrega__subtitulo" id="texto-taxa-entrega">+ R$ 8,00</div>
+            </label>
+            <label class="opcao-entrega" data-opcao="retirada">
+              <input type="radio" name="tipo_entrega" value="retirada" checked>
+              <span class="icone" data-icone="store"></span>
+              <div class="opcao-entrega__titulo">Retirar na Loja</div>
+              <div class="opcao-entrega__subtitulo">Sem taxa</div>
+            </label>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="campo-nome">Nome Completo</label>
+          <input type="text" id="campo-nome" autocomplete="name" required>
+          <small class="erro-campo">Digite seu nome completo.</small>
+        </div>
+
+        <div class="campo">
+          <label for="campo-telefone">Telefone/Whatsapp</label>
+          <input type="tel" id="campo-telefone" inputmode="tel" placeholder="(19) 9 9999-9999" autocomplete="tel" required>
+          <small class="erro-campo">Digite um telefone válido.</small>
+        </div>
+
+        <!-- Bloco de endereço — só aparece em "Receber em Casa" -->
+        <div id="bloco-endereco" hidden>
+          <div class="linha-campos linha-campos--cep">
+            <div class="campo">
+              <label for="campo-cep">CEP</label>
+              <input type="text" id="campo-cep" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="postal-code">
+              <small class="erro-campo">Digite um CEP válido.</small>
+            </div>
+            <div class="campo">
+              <label for="campo-rua">Rua</label>
+              <input type="text" id="campo-rua" readonly>
+              <small class="erro-campo">Preencha o CEP pra buscar a rua.</small>
+            </div>
+          </div>
+          <div class="campo">
+            <label for="campo-numero">Número</label>
+            <input type="text" id="campo-numero" inputmode="numeric">
+            <small class="erro-campo">Informe o número.</small>
+          </div>
+          <div class="campo">
+            <label for="campo-bairro">Bairro</label>
+            <input type="text" id="campo-bairro" readonly>
+            <small class="erro-campo">Preencha o CEP pra buscar o bairro.</small>
+          </div>
+          <div class="campo">
+            <label for="campo-complemento">Complemento</label>
+            <input type="text" id="campo-complemento" placeholder="Apto, bloco, ponto de referência...">
+            <small class="erro-campo">Informe um complemento (ou "não tem").</small>
+          </div>
+        </div>
+
+        <!-- Forma de pagamento — só aparece na entrega -->
+        <div class="bloco-radio" id="bloco-forma-pagamento">
+          <h3>Forma de Pagamento</h3>
+          <div class="bloco-radio__aviso" id="aviso-pagamento">*Pagamento realizado no momento da entrega</div>
+
+          <label class="linha-radio">
+            <input type="radio" name="forma_pagamento" value="dinheiro">
+            Dinheiro
+          </label>
+          <label class="linha-radio">
+            <input type="radio" name="forma_pagamento" value="pix">
+            Pix
+          </label>
+          <label class="linha-radio">
+            <input type="radio" name="forma_pagamento" value="debito">
+            Débito
+          </label>
+          <label class="linha-radio">
+            <input type="radio" name="forma_pagamento" value="credito">
+            Crédito
+          </label>
+
+          <div class="campo-troco" id="campo-troco" hidden>
+            <label for="campo-troco-para">Precisa de troco para quanto?</label>
+            <input type="number" id="campo-troco-para" step="0.01" min="0" placeholder="Ex: 50,00">
+            <div class="campo-troco__calculo" id="campo-troco-calculo"></div>
+          </div>
+
+          <div class="bloco-pix" id="bloco-pix" hidden>
+            Envie o comprovante pelo WhatsApp depois de pagar:<br>
+            Chave Pix: <strong id="pix-chave"></strong>
+            <a href="#" id="pix-whatsapp-link" target="_blank" rel="noopener" class="btn btn-secundario btn-bloco" style="margin-top:10px;">
+              <span class="icone" data-icone="whatsapp"></span> Enviar comprovante no WhatsApp
+            </a>
+          </div>
+
+          <small class="erro-campo" id="erro-pagamento" style="display:none; margin-top:10px;">Escolha uma forma de pagamento.</small>
+        </div>
+
+        <div class="resumo-pedido" style="margin-bottom: var(--sp-5);">
+          <h2>Resumo do Pedido</h2>
+          <div id="resumo-itens-finalizar"></div>
+          <div class="resumo-linha">
+            <span>Subtotal</span>
+            <span id="resumo-subtotal-finalizar">R$ 0,00</span>
+          </div>
+          <div class="resumo-linha" id="resumo-linha-entrega">
+            <span id="resumo-rotulo-entrega">Taxa de entrega</span>
+            <span id="resumo-taxa-entrega">R$ 0,00</span>
+          </div>
+          <div class="resumo-linha resumo-linha--total">
+            <span>Total</span>
+            <span id="resumo-total-finalizar">R$ 0,00</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primario btn-bloco" id="btn-confirmar-pedido">Confirmar Pedido</button>
+      </form>
+    </div>
+
+    <div class="estado-vazio" id="finalizar-vazio" hidden>
+      <div class="estado-vazio__icone">🧺</div>
+      <h3>Sua cesta está vazia</h3>
+      <p>Adicione produtos antes de finalizar o pedido.</p>
+      <br>
+      <a href="index.html" class="btn btn-primario">Ver produtos</a>
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <div class="container rodape__linha">
+      <div>
+        <div class="rodape__endereco" id="rodape-endereco">Rua Campos Salles, 400 - Centro<br>Santa Cruz das Palmeiras - SP</div>
+        <a class="rodape__contato" id="rodape-whatsapp-link" href="#" target="_blank" rel="noopener">
+          <span class="icone" data-icone="whatsapp"></span><span id="rodape-whatsapp-texto">(19) 9 9999-9999</span>
+        </a>
+        <a class="rodape__contato" id="rodape-instagram-link" href="#" target="_blank" rel="noopener">
+          <span class="icone" data-icone="instagram"></span><span id="rodape-instagram-texto">@adega_zebeer</span>
+        </a>
+      </div>
+      <div class="rodape__logo"><img src="img/logo-adega-ze-beer.png" alt="Adega Zé Beer"></div>
+    </div>
+  </footer>
+  <div class="rodape-copyright">© Moriart Sistemas</div>
+
+  <script src="js/icons.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/api.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/viacep.js"></script>
+  <script src="js/finalizar.js"></script>
+</body>
+</html>

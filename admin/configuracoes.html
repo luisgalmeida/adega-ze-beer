@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configurações — Painel Adega Zé Beer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+
+    <div class="painel__topo-mobile">
+    <button type="button" class="painel__botao-menu" id="btn-abrir-menu" aria-label="Abrir menu">
+      <span class="icone" data-icone="hamburger"></span>
+    </button>
+    <div class="marca">Zé Beer</div>
+  </div>
+  <div class="painel__menu-fundo" id="painel-menu-fundo"></div>
+
+  <div class="painel">
+    <nav class="painel__menu" aria-label="Menu do painel">
+      <button type="button" class="painel__menu-fechar" id="btn-fechar-menu" aria-label="Fechar menu"><span class="icone" data-icone="close"></span></button>
+      <div class="marca">Zé Beer</div>
+                  <div class="painel__nav">
+        <a href="pedidos.html"><span class="painel__nav-icone" data-icone="box"></span> Pedidos recebidos</a>
+        <a href="dashboard.html"><span class="painel__nav-icone" data-icone="chart"></span> Dashboard</a>
+        <a href="produtos.html"><span class="painel__nav-icone" data-icone="bottle"></span> Produtos</a>
+        <a href="categorias.html"><span class="painel__nav-icone" data-icone="tag"></span> Categorias</a>
+        <a href="combos.html"><span class="painel__nav-icone" data-icone="grid"></span> Combos</a>
+        <a href="copao.html"><span class="painel__nav-icone" data-icone="cup"></span> Copão</a>
+        <a href="configuracoes.html" aria-current="page"><span class="painel__nav-icone" data-icone="gear"></span> Configurações</a>
+      </div>
+      <div class="painel__logo-menu">
+        <img src="../img/logo-adega-ze-beer.png" alt="Adega Zé Beer">
+      </div>
+      <div class="painel__rodape-menu">
+        <div class="painel__usuario" id="painel-usuario">—</div>
+        <button type="button" class="painel__sair" id="btn-sair">Sair</button>
+      </div>
+    </nav>
+
+    <main class="painel__conteudo">
+      <div class="painel__cabecalho">
+        <div>
+          <h1 class="painel__titulo">Configurações da loja</h1>
+          <p class="painel__subtitulo">Esses dados mudam por cliente — nunca ficam fixos no código</p>
+        </div>
+      </div>
+
+      <!-- Formulário "invisível": os campos das seções abaixo usam form="form-config"
+           pra ficarem associados a este form mesmo estando fora dele no HTML. -->
+      <form id="form-config"></form>
+
+      <div class="bloco-painel" style="max-width: 640px;">
+        <h2>Contato e localização</h2>
+        <div class="campo">
+          <label for="config-whatsapp">WhatsApp (com DDD e código do país)</label>
+          <input type="text" id="config-whatsapp" placeholder="5519999999999" form="form-config">
+          <small class="dica">Formato: 55 + DDD + número, sem espaços ou símbolos.</small>
+        </div>
+        <div class="campo">
+          <label for="config-cidade-regiao">Cidade/região (aparece no topo do site)</label>
+          <input type="text" id="config-cidade-regiao" placeholder="Santa Cruz das Palmeiras - SP" form="form-config">
+        </div>
+        <div class="campo">
+          <label for="config-endereco">Endereço completo da loja</label>
+          <input type="text" id="config-endereco" placeholder="Rua, número — bairro, cidade/UF" form="form-config">
+        </div>
+        <div class="linha-campos linha-campos--2">
+          <div class="campo">
+            <label for="config-instagram">Instagram <span class="opcional">(opcional)</span></label>
+            <input type="url" id="config-instagram" placeholder="https://instagram.com/..." form="form-config">
+          </div>
+          <div class="campo">
+            <label for="config-facebook">Facebook <span class="opcional">(opcional)</span></label>
+            <input type="url" id="config-facebook" placeholder="https://facebook.com/..." form="form-config">
+          </div>
+        </div>
+      </div>
+
+      <div class="bloco-painel" style="max-width: 640px;">
+        <h2>Pedidos e entrega</h2>
+        <div class="campo">
+          <label for="config-valor-entrega">Taxa de entrega (R$)</label>
+          <input type="number" id="config-valor-entrega" step="0.01" min="0" placeholder="6.00" form="form-config">
+          <small class="dica">Somada ao pedido só quando o cliente escolhe "Receber em casa" no checkout. Na retirada, não é cobrada.</small>
+        </div>
+        <div class="linha-campos linha-campos--2">
+          <div class="campo">
+            <label for="config-tempo-entrega">Tempo médio de entrega</label>
+            <input type="text" id="config-tempo-entrega" placeholder="30 a 60 minutos" form="form-config">
+          </div>
+          <div class="campo">
+            <label for="config-tempo-retirada">Tempo médio de retirada</label>
+            <input type="text" id="config-tempo-retirada" placeholder="15 a 25 minutos" form="form-config">
+          </div>
+        </div>
+        <small class="dica">Aparecem na tela de confirmação do pedido, um ou outro dependendo do que o cliente escolheu.</small>
+      </div>
+
+      <div class="bloco-painel" style="max-width: 640px;">
+        <h2>Recebimentos</h2>
+        <p style="font-size:13.5px; color:var(--cor-texto-suave); margin-top:-8px; margin-bottom:16px;">Usados quando o cliente escolhe pagar por Pix no checkout.</p>
+        <div class="campo">
+          <label for="config-chave-pix">Chave Pix</label>
+          <input type="text" id="config-chave-pix" placeholder="CPF, e-mail, telefone ou chave aleatória" form="form-config">
+        </div>
+        <div class="campo">
+          <label for="config-whatsapp-pix">WhatsApp para receber o comprovante</label>
+          <input type="text" id="config-whatsapp-pix" placeholder="5519999999999" form="form-config">
+          <small class="dica">Se deixar em branco, usa o WhatsApp geral da loja (acima).</small>
+        </div>
+      </div>
+
+      <div class="bloco-painel" style="max-width: 640px;">
+        <h2>Vitrine</h2>
+        <div class="campo">
+          <label for="config-qtd-carrosseis">Limite de carrosséis mostrados na home</label>
+          <input type="number" id="config-qtd-carrosseis" min="0" step="1" placeholder="0" form="form-config">
+          <small class="dica">Escolha quais categorias aparecem na vitrine em Categorias → "Na vitrine". Este número aqui é só um teto opcional sobre elas — por exemplo, se 8 categorias estiverem marcadas mas você colocar 5 aqui, só as 5 primeiras (na ordem definida em Categorias) aparecem na home. Deixe em branco ou 0 para mostrar todas as marcadas.</small>
+        </div>
+        <button type="submit" class="btn btn-primario" id="btn-salvar-config" form="form-config">Salvar configurações</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/icons.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/api.js"></script>
+  <script src="js/auth-guard.js"></script>
+  <script src="js/painel-comum.js"></script>
+  <script src="../js/toast.js"></script>
+  <script src="js/configuracoes.js"></script>
+</body>
+</html>

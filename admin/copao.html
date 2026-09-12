@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copão — Painel Adega Zé Beer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+
+    <div class="painel__topo-mobile">
+    <button type="button" class="painel__botao-menu" id="btn-abrir-menu" aria-label="Abrir menu">
+      <span class="icone" data-icone="hamburger"></span>
+    </button>
+    <div class="marca">Zé Beer</div>
+  </div>
+  <div class="painel__menu-fundo" id="painel-menu-fundo"></div>
+
+  <div class="painel">
+    <nav class="painel__menu" aria-label="Menu do painel">
+      <button type="button" class="painel__menu-fechar" id="btn-fechar-menu" aria-label="Fechar menu"><span class="icone" data-icone="close"></span></button>
+      <div class="marca">Zé Beer</div>
+            <div class="painel__nav">
+        <a href="pedidos.html"><span class="painel__nav-icone" data-icone="box"></span> Pedidos recebidos</a>
+        <a href="dashboard.html"><span class="painel__nav-icone" data-icone="chart"></span> Dashboard</a>
+        <a href="produtos.html"><span class="painel__nav-icone" data-icone="bottle"></span> Produtos</a>
+        <a href="categorias.html"><span class="painel__nav-icone" data-icone="tag"></span> Categorias</a>
+        <a href="combos.html"><span class="painel__nav-icone" data-icone="grid"></span> Combos</a>
+        <a href="copao.html" aria-current="page"><span class="painel__nav-icone" data-icone="cup"></span> Copão</a>
+        <a href="configuracoes.html"><span class="painel__nav-icone" data-icone="gear"></span> Configurações</a>
+      </div>
+      <div class="painel__logo-menu">
+        <img src="../img/logo-adega-ze-beer.png" alt="Adega Zé Beer">
+      </div>
+      <div class="painel__rodape-menu">
+        <div class="painel__usuario" id="painel-usuario">—</div>
+        <button type="button" class="painel__sair" id="btn-sair">Sair</button>
+      </div>
+    </nav>
+
+    <main class="painel__conteudo">
+      <div class="painel__cabecalho">
+        <div>
+          <h1 class="painel__titulo">Copão</h1>
+          <p class="painel__subtitulo">Produtos exclusivos de "Monte seu Copão" e os energéticos disponíveis</p>
+        </div>
+      </div>
+
+      <!-- ============ BANNER E TEXTO DO COPÃO ============ -->
+      <div class="bloco-painel">
+        <h2>Configuração do copão</h2>
+        <div class="campo">
+          <label for="copao-banner-url">URL da imagem do banner (aparece na home e no topo da página)</label>
+          <input type="url" id="copao-banner-url" placeholder="https://...">
+          <small class="dica">Tamanho recomendado: 1200x600px (proporção 2:1). O sistema ajusta a imagem automaticamente pro celular e pro computador.</small>
+        </div>
+        <div class="campo" style="margin-bottom:0;">
+          <label for="copao-texto-info">Texto abaixo da imagem</label>
+          <textarea id="copao-texto-info" rows="3" style="width:100%; padding:13px; border:1.5px solid var(--cor-borda-marca); border-radius:8px; font-family:inherit; font-size:14.5px; resize:vertical;" placeholder="Copo 770ml&#10;Energético&#10;Gelo saborizado"></textarea>
+          <small class="dica">Cada linha vira uma linha separada na tela do cliente.</small>
+        </div>
+        <button type="button" class="btn btn-primario" id="btn-salvar-banner-copao" style="margin-top:12px;">Salvar</button>
+      </div>
+
+      <!-- ============ ENERGÉTICOS ============ -->
+      <div class="bloco-painel">
+        <h2>Energéticos</h2>
+        <div class="lista-itens-simples" id="lista-energeticos"></div>
+        <form class="form-item-simples" id="form-energetico">
+          <div class="campo">
+            <label for="novo-energetico-nome">Nome</label>
+            <input type="text" id="novo-energetico-nome" placeholder="Ex: Morango" required>
+          </div>
+          <div class="campo" style="max-width:140px;">
+            <label for="novo-energetico-preco">Preço adicional (R$)</label>
+            <input type="number" id="novo-energetico-preco" step="0.01" min="0" placeholder="0,00">
+          </div>
+          <button type="submit" class="btn btn-secundario">+ Adicionar</button>
+        </form>
+      </div>
+
+      <!-- ============ SABORES DE GELO (somente leitura aqui) ============ -->
+      <div class="bloco-painel">
+        <h2>Sabores de gelo</h2>
+        <p class="nota-secao">Essa lista é a mesma usada no Monte seu Combo — edite em <a href="combos.html">Combos → Sabores de gelo</a>.</p>
+        <div class="lista-itens-simples" id="lista-sabores-leitura"></div>
+      </div>
+
+      <!-- ============ PRODUTOS DE COPÃO ============ -->
+      <div class="painel__cabecalho">
+        <h2 class="painel__titulo" style="font-size:19px;">Produtos de Copão</h2>
+        <button class="btn btn-primario" id="btn-novo-copao">+ Novo copão</button>
+      </div>
+
+      <div class="tabela-wrap">
+        <table class="tabela">
+          <thead><tr><th></th><th>Nome</th><th>Preço</th><th>Status</th><th>Ações</th></tr></thead>
+          <tbody id="tabela-copoes"></tbody>
+        </table>
+      </div>
+      <div class="estado-vazio" id="copoes-vazio" hidden><p>Nenhum copão cadastrado ainda.</p></div>
+    </main>
+  </div>
+
+  <!-- ============ MODAL: CADASTRAR / EDITAR COPÃO ============ -->
+  <div class="modal-fundo" id="modal-copao">
+    <div class="modal">
+      <div class="modal__cabecalho">
+        <h2 class="modal__titulo" id="modal-copao-titulo">Novo copão</h2>
+        <button class="modal__fechar" id="fechar-modal-copao" aria-label="Fechar">✕</button>
+      </div>
+      <form id="form-copao">
+        <input type="hidden" id="copao-id">
+        <div class="campo">
+          <label for="copao-nome">Nome</label>
+          <input type="text" id="copao-nome" required>
+        </div>
+        <div class="campo">
+          <label for="copao-preco">Preço (R$)</label>
+          <input type="number" id="copao-preco" step="0.01" min="0" required>
+        </div>
+        <div class="campo">
+          <label for="copao-imagem">URL da imagem <span class="opcional">(opcional)</span></label>
+          <input type="url" id="copao-imagem" placeholder="https://...">
+        </div>
+        <div class="campo">
+          <label for="copao-descricao">Descrição</label>
+          <input type="text" id="copao-descricao">
+        </div>
+        <label class="check-linha">
+          <input type="checkbox" id="copao-disponivel" checked>
+          Disponível na vitrine
+        </label>
+        <div class="modal__acoes">
+          <button type="button" class="btn btn-secundario" id="cancelar-modal-copao">Cancelar</button>
+          <button type="submit" class="btn btn-primario" id="salvar-copao">Salvar copão</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/icons.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/api.js"></script>
+  <script src="js/auth-guard.js"></script>
+  <script src="js/painel-comum.js"></script>
+  <script src="../js/toast.js"></script>
+  <script src="js/copao.js"></script>
+</body>
+</html>

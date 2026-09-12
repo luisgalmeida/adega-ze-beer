@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrar — Painel Adega Zé Beer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+
+  <div class="tela-login">
+    <div class="tela-login__logo">
+      <img src="../img/logo-adega-ze-beer.png" alt="Adega Zé Beer">
+    </div>
+    <div class="cartao-login">
+      <div class="marca">Zé Beer</div>
+      <p class="cartao-login__subtitulo">Painel administrativo</p>
+
+      <div class="mensagem-erro-login" id="mensagem-erro"></div>
+
+      <form id="form-login">
+        <div class="campo">
+          <label for="campo-email">E-mail</label>
+          <input type="email" id="campo-email" autocomplete="username" required>
+        </div>
+        <div class="campo">
+          <label for="campo-senha">Senha</label>
+          <input type="password" id="campo-senha" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn btn-primario btn-bloco" id="btn-entrar">Entrar</button>
+      </form>
+
+      <div class="cartao-login__dica">
+        <strong>Login de demonstração:</strong><br>
+        E-mail: admin@adegazebeer.com.br<br>
+        Senha: admin123
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/icons.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/api.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>
