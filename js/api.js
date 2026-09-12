@@ -17,7 +17,7 @@
    Pra ligar de verdade ao Supabase:
      1. Adicione o script do client em cada HTML, antes deste arquivo:
         <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-     2. No topo deste arquivo, crie o client (veja variável `supabase`
+     2. No topo deste arquivo, crie o client (veja variável `sb`
         comentada abaixo) com sua URL e sua chave anon.
      3. Em cada função, apague o bloco DEMO e descomente o bloco
         PRODUÇÃO correspondente.
@@ -27,7 +27,7 @@
 
 const SUPABASE_URL = 'https://piwkjqcjkxzpmfjmpqpo.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_iyvkiyAaBMaTe4Gav0wTwQ_I-RXSEqv';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
 const API = (() => {
 
@@ -96,24 +96,24 @@ const API = (() => {
     // Ordena por "ordem" (definida pelo dono no painel, em Categorias),
     // não mais por criado_em — é o que o menu, os cards de destaque e
     // os carrosséis da home seguem pra decidir a sequência.
-    const { data, error } = await supabase.from('categorias').select('*').order('ordem');
+    const { data, error } = await sb.from('categorias').select('*').order('ordem');
     return { data, error };
   }
 
   async function criarCategoria(categoria) {
-    const { data, error } = await supabase.from('categorias').insert({
+    const { data, error } = await sb.from('categorias').insert({
       nome: categoria.nome, mostrar_na_vitrine: categoria.mostrar_na_vitrine !== false, ordem: categoria.ordem,
     }).select().single();
     return { data, error };
   }
 
   async function atualizarCategoria(id, dados) {
-    const { data, error } = await supabase.from('categorias').update(dados).eq('id', id).select().single();
+    const { data, error } = await sb.from('categorias').update(dados).eq('id', id).select().single();
     return { data, error };
   }
 
   async function excluirCategoria(id) {
-    const { error } = await supabase.from('categorias').delete().eq('id', id);
+    const { error } = await sb.from('categorias').delete().eq('id', id);
     return { data: !error, error };
   }
 
@@ -127,7 +127,7 @@ const API = (() => {
 
   async function getProdutos(filtros = {}) {
     // filtros: { categoriaId, busca, apenasDisponiveis }
-    let consulta = supabase.from('produtos').select('*, categorias(nome)');
+    let consulta = sb.from('produtos').select('*, categorias(nome)');
     if (filtros.categoriaId) consulta = consulta.eq('categoria_id', filtros.categoriaId);
     if (filtros.apenasDisponiveis) consulta = consulta.eq('disponivel', true);
     if (filtros.busca) consulta = consulta.ilike('nome', `%${filtros.busca}%`);
@@ -136,12 +136,12 @@ const API = (() => {
   }
 
   async function getProdutoPorId(id) {
-    const { data, error } = await supabase.from('produtos').select('*, categorias(nome)').eq('id', id).single();
+    const { data, error } = await sb.from('produtos').select('*, categorias(nome)').eq('id', id).single();
     return { data, error };
   }
 
   async function criarProduto(produto) {
-    const { data, error } = await supabase.from('produtos').insert({
+    const { data, error } = await sb.from('produtos').insert({
       nome: produto.nome, descricao: produto.descricao, preco: produto.preco,
       categoria_id: produto.categoria_id, imagem_url: produto.imagem_url,
       disponivel: produto.disponivel, em_oferta: produto.em_oferta,
@@ -151,12 +151,12 @@ const API = (() => {
   }
 
   async function atualizarProduto(id, dados) {
-    const { data, error } = await supabase.from('produtos').update(dados).eq('id', id).select().single();
+    const { data, error } = await sb.from('produtos').update(dados).eq('id', id).select().single();
     return { data, error };
   }
 
   async function excluirProduto(id) {
-    const { error } = await supabase.from('produtos').delete().eq('id', id);
+    const { error } = await sb.from('produtos').delete().eq('id', id);
     return { data: !error, error };
   }
 
@@ -170,12 +170,12 @@ const API = (() => {
      ================================================================= */
 
   async function getComboProdutos() {
-    const { data, error } = await supabase.from('combo_produtos').select('*').order('criado_em');
+    const { data, error } = await sb.from('combo_produtos').select('*').order('criado_em');
     return { data, error };
   }
 
   async function criarComboProduto(produto) {
-    const { data, error } = await supabase.from('combo_produtos').insert({
+    const { data, error } = await sb.from('combo_produtos').insert({
       nome: produto.nome, descricao: produto.descricao, preco: produto.preco,
       imagem_url: produto.imagem_url, disponivel: produto.disponivel,
     }).select().single();
@@ -183,12 +183,12 @@ const API = (() => {
   }
 
   async function atualizarComboProduto(id, dados) {
-    const { data, error } = await supabase.from('combo_produtos').update(dados).eq('id', id).select().single();
+    const { data, error } = await sb.from('combo_produtos').update(dados).eq('id', id).select().single();
     return { data, error };
   }
 
   async function excluirComboProduto(id) {
-    const { error } = await supabase.from('combo_produtos').delete().eq('id', id);
+    const { error } = await sb.from('combo_produtos').delete().eq('id', id);
     return { data: !error, error };
   }
 
@@ -199,12 +199,12 @@ const API = (() => {
      ================================================================= */
 
   async function getCopaoProdutos() {
-    const { data, error } = await supabase.from('copao_produtos').select('*').order('criado_em');
+    const { data, error } = await sb.from('copao_produtos').select('*').order('criado_em');
     return { data, error };
   }
 
   async function criarCopaoProduto(produto) {
-    const { data, error } = await supabase.from('copao_produtos').insert({
+    const { data, error } = await sb.from('copao_produtos').insert({
       nome: produto.nome, descricao: produto.descricao, preco: produto.preco,
       imagem_url: produto.imagem_url, disponivel: produto.disponivel,
     }).select().single();
@@ -212,46 +212,46 @@ const API = (() => {
   }
 
   async function atualizarCopaoProduto(id, dados) {
-    const { data, error } = await supabase.from('copao_produtos').update(dados).eq('id', id).select().single();
+    const { data, error } = await sb.from('copao_produtos').update(dados).eq('id', id).select().single();
     return { data, error };
   }
 
   async function excluirCopaoProduto(id) {
-    const { error } = await supabase.from('copao_produtos').delete().eq('id', id);
+    const { error } = await sb.from('copao_produtos').delete().eq('id', id);
     return { data: !error, error };
   }
 
   /* ---------- Sabores de gelo (compartilhado entre Combo e Copão) ---------- */
 
   async function getSaboresGelo() {
-    const { data, error } = await supabase.from('sabores_gelo').select('*').order('nome');
+    const { data, error } = await sb.from('sabores_gelo').select('*').order('nome');
     return { data, error };
   }
 
   async function criarSaborGelo(nome) {
-    const { data, error } = await supabase.from('sabores_gelo').insert({ nome }).select().single();
+    const { data, error } = await sb.from('sabores_gelo').insert({ nome }).select().single();
     return { data, error };
   }
 
   async function excluirSaborGelo(id) {
-    const { error } = await supabase.from('sabores_gelo').delete().eq('id', id);
+    const { error } = await sb.from('sabores_gelo').delete().eq('id', id);
     return { data: !error, error };
   }
 
   /* ---------- Energéticos (exclusivo do Copão, cada um com preço próprio) ---------- */
 
   async function getEnergeticos() {
-    const { data, error } = await supabase.from('energeticos').select('*').order('preco_adicional');
+    const { data, error } = await sb.from('energeticos').select('*').order('preco_adicional');
     return { data, error };
   }
 
   async function criarEnergetico({ nome, preco_adicional }) {
-    const { data, error } = await supabase.from('energeticos').insert({ nome, preco_adicional }).select().single();
+    const { data, error } = await sb.from('energeticos').insert({ nome, preco_adicional }).select().single();
     return { data, error };
   }
 
   async function excluirEnergetico(id) {
-    const { error } = await supabase.from('energeticos').delete().eq('id', id);
+    const { error } = await sb.from('energeticos').delete().eq('id', id);
     return { data: !error, error };
   }
 
@@ -284,7 +284,7 @@ const API = (() => {
     const ehEntrega = pedido.tipo_entrega === 'entrega';
     const subtotal = pedido.itens.reduce((soma, item) => soma + item.preco_unit * item.quantidade, 0);
     const taxaEntrega = ehEntrega ? Number(pedido.valor_entrega || 0) : 0;
-    const { data, error } = await supabase.from('pedidos').insert({
+    const { data, error } = await sb.from('pedidos').insert({
       cliente_nome: pedido.cliente_nome,
       telefone: pedido.telefone,
       tipo_entrega: pedido.tipo_entrega,
@@ -312,7 +312,7 @@ const API = (() => {
     // Traz os pedidos e agrega no navegador (mesma lógica do modo demo) —
     // funciona bem no volume de uma loja; se o histórico crescer muito,
     // vale migrar pra uma view/RPC do Postgres que já agrega no banco.
-    const { data: todosPedidos, error } = await supabase.from('pedidos').select('*');
+    const { data: todosPedidos, error } = await sb.from('pedidos').select('*');
     if (error) return { data: null, error };
 
     let pedidos = todosPedidos;
@@ -336,17 +336,17 @@ const API = (() => {
 
   async function getPedidos() {
     // (rota protegida — só o dono da loja autenticado consegue ler, via RLS)
-    const { data, error } = await supabase.from('pedidos').select('*').order('criado_em', { ascending: false });
+    const { data, error } = await sb.from('pedidos').select('*').order('criado_em', { ascending: false });
     return { data, error };
   }
 
   async function getPedidoPorId(id) {
-    const { data, error } = await supabase.from('pedidos').select('*').eq('id', id).single();
+    const { data, error } = await sb.from('pedidos').select('*').eq('id', id).single();
     return { data, error };
   }
 
   async function atualizarStatusPedido(id, status) {
-    const { data, error } = await supabase.from('pedidos').update({ status }).eq('id', id).select().single();
+    const { data, error } = await sb.from('pedidos').update({ status }).eq('id', id).select().single();
     return { data, error };
   }
 
@@ -357,12 +357,12 @@ const API = (() => {
      ================================================================= */
 
   async function getConfigLoja() {
-    const { data, error } = await supabase.from('loja_config').select('*').single();
+    const { data, error } = await sb.from('loja_config').select('*').single();
     return { data, error };
   }
 
   async function salvarConfigLoja(config) {
-    const { data, error } = await supabase.from('loja_config').update(config).eq('id', 1).select().single();
+    const { data, error } = await sb.from('loja_config').update(config).eq('id', 1).select().single();
     return { data, error };
   }
 
@@ -371,16 +371,16 @@ const API = (() => {
      ================================================================= */
 
   async function login(email, senha) {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password: senha });
+    const { data, error } = await sb.auth.signInWithPassword({ email, password: senha });
     return { data, error };
   }
 
   async function logout() {
-    await supabase.auth.signOut();
+    await sb.auth.signOut();
   }
 
   async function getSessao() {
-    const { data } = await supabase.auth.getSession();
+    const { data } = await sb.auth.getSession();
     return data.session;
   }
 
